@@ -1,12 +1,28 @@
 <template>
-  <div class="player">
-
+  <div class="player row">
+    <div class="col-md-12">
+      <p>Player Here</p>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Player'
+    name: 'Player',
+    props: [],
+    data() {
+      return {
+
+      }
+    },
+
+    methods: {
+
+    },
+
+    computed: {
+
+    }
 
   }
 </script>
