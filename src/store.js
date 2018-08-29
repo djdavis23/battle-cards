@@ -18,10 +18,12 @@ export default new Vuex.Store({
     setGame(state, data) {
       state.game = data
       state.gameStarted = true
+      console.log("game: ", state.game)
     }
   },
   actions: {
     initiateGame({ commit, dispatch }, gameConfig) {
+      console.log("config: ", gameConfig)
       gameApi.post('', gameConfig)
         .then(res => {
           commit('setGame', res.data)

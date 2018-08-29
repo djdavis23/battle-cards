@@ -44,7 +44,7 @@
     methods: {
       startGame() {
         let gameConfig = {
-          playerName: this.playName,
+          playerName: this.playerName,
           opponents: this.opponents,
           set: this.set
         }
