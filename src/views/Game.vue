@@ -34,40 +34,32 @@
 </template>
 
 <script>
-  // @ is an alias to /src
-  // import Opponents from "@/components/Opponents.vue";
-  // import Player from "@/components/Player.vue";
-  // import GameControl from '@/components/GameControl.vue'
+// @ is an alias to /src
+// import Opponents from "@/components/Opponents.vue";
+// import Player from "@/components/Player.vue";
+// import GameControl from '@/components/GameControl.vue'
 
-  export default {
-    name: 'game',
-    components: {
-      // Opponents,
-      // Player,
-      // GameControl
-    },
-    data() {
-      return {
-        gameConfig: {
-          playerName: '',
-          opponents: 0,
-          set: 0
-        }
+export default {
+  name: "game",
+
+  data() {
+    return {
+      gameConfig: {
+        playerName: "",
+        opponents: 0,
+        set: 0
       }
-    },
+    };
+  },
 
-    methods: {
-      startGame(gameConfig) {
-        this.$store.dispatch('startGame', this.gameConfig)
-      }
-
-    },
-
-    computed: {
-
+  methods: {
+    startGame(gameConfig) {
+      this.$store.dispatch("startGame", this.gameConfig);
     }
-  }
+  },
 
+  computed: {}
+};
 </script>
 
 <style scoped>

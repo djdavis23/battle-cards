@@ -11,7 +11,9 @@ const gameApi = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    game: {}
+    game: {},
+    playerCardId: '',
+    opponentCardId: ''
   },
 
   mutations: {
@@ -19,8 +21,29 @@ export default new Vuex.Store({
       state.game = game
       console.log("state.game: ", state.game)
       router.push({ name: 'activeGame', params: { gameId: game.id } })
+    },
+
+    setPlayerCardId(state, cardId) {
+      state.playerCardId = cardId
+    },
+
+    setOpponentCardId(state, cardId) {
+      state.opponentCardId = cardId
+    },
+
+    resetCards(state) {
+      state.opponentCardId = ''
+      state.playerCardId = ''
+    },
+
+    resetGame(state) {
+      state.opponentCardId = ''
+      state.playerCardId = ''
+      state.game = {}
+      router.push({ name: 'game' })
     }
   },
+
   actions: {
     startGame({ commit, dispatch }, gameConfig) {
       console.log("config: ", gameConfig)
@@ -36,8 +59,17 @@ export default new Vuex.Store({
         .then(res => {
           console.log("response to getGame: ", res.data.data)
           commit('setGame', res.data.data)
+          commit('resetCards')
         })
         .catch(err => console.error(err.message))
+    },
+
+    setPlayerCardId({ commit, dispatch }, cardId) {
+      commit('setPlayerCardId', cardId)
+    },
+
+    setOpponentCardId({ commit, dispatch }, cardId) {
+      commit('setOpponentCardId', cardId)
     },
 
     battle({ commit, dispatch }, payload) {
@@ -45,6 +77,15 @@ export default new Vuex.Store({
         .then(res => {
           console.log("results from attack: ", res)
           dispatch('getGame', payload.gameId)
+        })
+        .catch(err => console.error(err.message))
+    },
+
+    resetGame({ commit, dispatch }, gameId) {
+      gameApi.delete('/' + gameId)
+        .then(res => {
+          console.log(res.data)
+          commit('resetGame')
         })
         .catch(err => console.error(err.message))
     }
