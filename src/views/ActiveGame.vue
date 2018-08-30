@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8 mb-5 mt-5">
         <button @click="battle" class="btn btn-lg btn-success" v-if="this.playerCardId && this.opponentCardId">FIGHT!</button>
-        <h1 class="text-success" v-else>Select cards for battle</h1>
+        <h1 class="text-warning" v-else>Select cards for battle</h1>
       </div>
     </div>
     <Player v-on:setPlayerCard="setPlayerCard" />
@@ -16,10 +16,9 @@
   import Player from '@/components/Player.vue'
 
   export default {
-
+    name: 'activeGame',
     mounted() {
       let gameId = this.$route.params.gameId
-      console.log("active game id: ", gameId)
       if (!this.activeGame.id) {
         this.$store.dispatch('getGame', gameId)
       }
@@ -45,6 +44,15 @@
         this.playerCardId = cardId
         console.log("player card id: ", this.playerCardId)
       },
+
+      // resetOpponentCard() {
+      //   opponentCardId = ''
+      // },
+
+      // resetPlayerCard() {
+      //   playerCardId = ''
+      // },
+
       battle() {
         let attack = {
           playerId: this.activeGame.players[0].id,
@@ -54,6 +62,7 @@
         }
         let gameId = this.activeGame.id
         this.$store.dispatch('battle', { gameId, attack })
+
       }
     },
 

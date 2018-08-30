@@ -17,8 +17,8 @@ export default new Vuex.Store({
   mutations: {
     setGame(state, game) {
       state.game = game
+      console.log("state.game: ", state.game)
       router.push({ name: 'activeGame', params: { gameId: game.id } })
-      console.log("game: ", state.game)
     }
   },
   actions: {
@@ -34,14 +34,18 @@ export default new Vuex.Store({
     getGame({ commit, dispatch }, gameId) {
       gameApi.get('/' + gameId)
         .then(res => {
-          commit('setGame', res.data)
+          console.log("response to getGame: ", res.data.data)
+          commit('setGame', res.data.data)
         })
         .catch(err => console.error(err.message))
     },
 
     battle({ commit, dispatch }, payload) {
       gameApi.put('/' + payload.gameId, payload.attack)
-        .then(res => console.log(res))
+        .then(res => {
+          console.log("results from attack: ", res)
+          dispatch('getGame', payload.gameId)
+        })
         .catch(err => console.error(err.message))
     }
   }
