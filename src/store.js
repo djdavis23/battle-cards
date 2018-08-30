@@ -13,14 +13,22 @@ export default new Vuex.Store({
   state: {
     game: {},
     playerCardId: '',
-    opponentCardId: ''
+    opponentCardId: '',
+    activeOpponent: {}
   },
 
   mutations: {
     setGame(state, game) {
       state.game = game
+      if (state.activeOpponent.id) {
+        state.activeOpponent = game.players.find(p => p.id == state.activeOpponent.id)
+      }
       console.log("state.game: ", state.game)
       router.push({ name: 'activeGame', params: { gameId: game.id } })
+    },
+
+    setActiveOpponent(state, opponent) {
+      state.activeOpponent = opponent
     },
 
     setPlayerCardId(state, cardId) {
@@ -39,6 +47,7 @@ export default new Vuex.Store({
     resetGame(state) {
       state.opponentCardId = ''
       state.playerCardId = ''
+      state.activeOpponent = {}
       state.game = {}
       router.push({ name: 'game' })
     }
@@ -62,6 +71,10 @@ export default new Vuex.Store({
           commit('resetCards')
         })
         .catch(err => console.error(err.message))
+    },
+
+    setActiveOpponent({ commit, dispatch }, opponent) {
+      commit('setActiveOpponent', opponent)
     },
 
     setPlayerCardId({ commit, dispatch }, cardId) {

@@ -11,9 +11,9 @@
           <label for="opponents"><h4 class="text-primary">Select Number of opponents: </h4>
             <select class="form-control-lg" v-model="gameConfig.opponents" name="opponents">
               <option value="1">1</option>
-              <!-- <option value="2">2</option>
+              <option value="2">2</option>
               <option value="3">3</option>
-              <option value="4">4</option> -->
+              <option value="4">4</option>
             </select>
           </label><br>
           <label for="deck"><h4 class="text-primary">Choose your card deck:</h4><br>

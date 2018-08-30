@@ -73,6 +73,9 @@ export default {
 
     opponentCardId() {
       return this.$store.state.opponentCardId;
+    },
+    activeOpponent() {
+      return this.$store.state.activeOpponent;
     }
   }
 };
