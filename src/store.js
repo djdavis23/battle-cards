@@ -15,9 +15,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    setGame(state, data) {
-      state.game = data
-      router.push({ name: 'activeGame', params: { gameId: state.game.id } })
+    setGame(state, game) {
+      state.game = game
+      router.push({ name: 'activeGame', params: { gameId: game.id } })
       console.log("game: ", state.game)
     }
   },
@@ -28,7 +28,7 @@ export default new Vuex.Store({
         .then(res => {
           commit('setGame', res.data)
         })
-        .catch(err => console.log(err.message))
+        .catch(err => console.error(err.message))
     },
 
     getGame({ commit, dispatch }, gameId) {
@@ -36,6 +36,12 @@ export default new Vuex.Store({
         .then(res => {
           commit('setGame', res.data)
         })
+        .catch(err => console.error(err.message))
+    },
+
+    battle({ commit, dispatch }, payload) {
+      gameApi.put('/' + payload.gameId, payload.attack)
+        .then(res => console.log(res))
         .catch(err => console.error(err.message))
     }
   }
