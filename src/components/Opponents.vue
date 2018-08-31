@@ -79,4 +79,8 @@
     font-size: 1.2rem;
     height: 60px;
   }
+
+  .col-md-2 {
+    min-width: 190px;
+  }
 </style>
