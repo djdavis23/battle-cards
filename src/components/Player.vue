@@ -1,8 +1,10 @@
 <template>
   <div class="player row">
     <div class="col-md-12">
-      <h3 class="text-primary">{{player.name}} &nbsp&nbsp Cards Remaining: {{player.remainingCards + player.hand.length}}</h3>
-      <div class="hand row justify-content-center">
+      <div class="bottom-border mb-2">
+        <h3 class="text-primary">{{player.name}} &nbsp&nbsp Cards Remaining: {{player.remainingCards + player.hand.length}}</h3>
+      </div>
+      <div class="hand row justify-content-around">
         <div class="col-md-2" v-for="card in player.hand" :key="card.id">
           <div class="card mb-3" :class="setBorder(card.id)" :id="card.id" @click="setActiveCard(card.id)">
             <h5 class=" card-header ">{{card.name}}</h5>
@@ -27,11 +29,13 @@
     },
 
     methods: {
+      //TURNS THE BORDER OF THE SELECTED CARD GREEN
       setBorder(id) {
         if (id == this.activeCardId) {
           return "active-card";
         }
       },
+      //SETS ACTIVE CARD BASED ON MOUSE CLICK
       setActiveCard(cardId) {
         this.$store.dispatch("setPlayerCardId", cardId);
       }
@@ -67,5 +71,10 @@
 
   .col-md-2 {
     min-width: 190px;
+  }
+
+  .bottom-border {
+    font-family: 'Cinzel', serif;
+    border-bottom: 1px solid #2a9fd6;
   }
 </style>

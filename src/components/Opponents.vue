@@ -2,9 +2,10 @@
   <div class="opponents row">
     <div class="col-md-12">
       <div class="mb-3">
-        <button v-for="opponent in opponents" :key="opponent.id" v-if="!opponent.dead" class="btn btn-primary" @click="setActiveOpponent(opponent)">{{opponent.name}}</button>
+        <button v-for="opponent in opponents" :key="opponent.id" v-if="opponents.length > 1 && !opponent.dead" class="btn btn-primary"
+          @click="setActiveOpponent(opponent)">{{opponent.name}}</button>
       </div>
-      <div class="hand row justify-content-center">
+      <div class="hand row justify-content-around">
         <div class="col-md-2" v-if="activeOpponent.id" v-for="card in activeOpponent.hand" :key="card.id">
           <div class="card mb-3" :class="setBorder(card.id)" :id="card.id" @click="setActiveCard(card.id)">
             <h5 class="card-header" v-if="card.visible">{{card.name}}</h5>
@@ -19,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 top-border">
       <h3 class="text-primary" v-if="activeOpponent.id">{{activeOpponent.name}} &nbsp&nbsp Cards Remaining: {{activeOpponent.remainingCards
         + activeOpponent.hand.length}}</h3>
       <h3 class="text-primary" v-if="!activeOpponent.id">Select an opponent to attack</h3>
@@ -30,22 +31,25 @@
 <script>
   export default {
     name: "Opponents",
-    props: [],
+    props: ['activeGame'],
 
     data() {
       return {};
     },
 
     methods: {
+      //TURNS THE BORDER OF THE SELECTED CARD GREEN
       setBorder(id) {
         if (id == this.activeCardId) {
           return "active-card";
         }
       },
+      //SETS THE ACTIVE CARD BASED ON MOUSE CLICK
       setActiveCard(cardId) {
         this.$store.dispatch("setOpponentCardId", cardId);
       },
 
+      //SETS ACTIVE OPPONENT BASED ON BUTTON CLICK
       setActiveOpponent(opponent) {
         this.$store.dispatch("setActiveOpponent", opponent);
       }
@@ -61,6 +65,7 @@
       opponents() {
         return this.$store.state.game.players.slice(1);
       }
+
     }
   };
 </script>
@@ -82,5 +87,10 @@
 
   .col-md-2 {
     min-width: 190px;
+  }
+
+  .top-border {
+    font-family: 'Cinzel', serif;
+    border-top: 1px solid #2a9fd6;
   }
 </style>
